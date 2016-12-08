@@ -1,20 +1,17 @@
 {
-  "version": "1.0.1-*",
+  "version": "1.0.2-*",
 
   "frameworks": {
+    "net451": {
+      "frameworkAssemblies": {
+        "System.Collections": "",
+        "System.Linq": ""
+      }
+    },
     "net46": {
       "frameworkAssemblies": {
-        "System.Runtime": "",
-        "System.Threading": "",
-        "System.Threading.Tasks": "",
         "System.Collections": "",
-        "System.Globalization": "",
-        "System.Linq": "",
-        "System.Text.Encoding": "",
-        "System.Reflection": "",
-        "System.Security": "",
-        "System.Xml": "",
-        "System.IO": ""
+        "System.Linq": ""
       }
     },
     "netstandard1.6": {
