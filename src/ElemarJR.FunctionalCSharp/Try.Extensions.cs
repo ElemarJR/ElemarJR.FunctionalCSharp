@@ -7,6 +7,11 @@ namespace ElemarJR.FunctionalCSharp
     public static class Try
     {
         #region Of
+        public static Try<IEnumerable<TFailure>, Func<TA, Try<IEnumerable<TFailure>, TSuccess>>> Of
+            <TA, TFailure, TSuccess>(
+                Func<TA, Try<IEnumerable<TFailure>, TSuccess>> func
+            ) => func;
+
         public static Try<IEnumerable<TFailure>, Func<TA, TB, Try<IEnumerable<TFailure>, TSuccess>>> Of
             <TA, TB, TFailure, TSuccess>(
                 Func<TA, TB, Try<IEnumerable<TFailure>, TSuccess>> func
