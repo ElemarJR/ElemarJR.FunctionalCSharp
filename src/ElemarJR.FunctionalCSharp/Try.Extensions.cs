@@ -73,5 +73,12 @@ namespace ElemarJR.FunctionalCSharp
             => @try.IsSucess
                 ? func(@try.Success)
                 : Try<TFailure, RR>.Of(@try.Failure);
+
+        public static Either<TFailure, TSuccess> ToEither<TFailure, TSuccess>(
+            this Try<TFailure, TSuccess> @try
+        ) => @try.Match<Either<TFailure, TSuccess>>(
+            failure: f => f,
+            success: s => s
+        );
     }
 }
