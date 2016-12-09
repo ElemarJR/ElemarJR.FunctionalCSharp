@@ -25,7 +25,7 @@ namespace ElemarJR.FunctionalCSharp
             failure: e => e,
             success: a => func.Match(
                 failure: e2 => e2,
-                success: f => Try<TFailure, TResult>.Of((TResult)f(a))
+                success: f => Try<TFailure, TResult>.Of(f(a))
             )
         );
 
@@ -58,21 +58,21 @@ namespace ElemarJR.FunctionalCSharp
                 )
             );
         }
-        public static Try<TFailure, RR> Map<TFailure, TSuccess, RR>(
+        public static Try<TFailure, NewTSuccess> Map<TFailure, TSuccess, NewTSuccess>(
                 this Try<TFailure, TSuccess> @try,
-                Func<TSuccess, RR> func
+                Func<TSuccess, NewTSuccess> func
             )
             => @try.IsSucess
                 ? func(@try.Success)
-                : Try<TFailure, RR>.Of(@try.Failure);
+                : Try<TFailure, NewTSuccess>.Of(@try.Failure);
 
-        public static Try<TFailure, RR> Bind<TFailure, TSuccess, RR>(
+        public static Try<TFailure, NewTSuccess> Bind<TFailure, TSuccess, NewTSuccess>(
                 this Try<TFailure, TSuccess> @try,
-                Func<TSuccess, Try<TFailure, RR>> func
+                Func<TSuccess, Try<TFailure, NewTSuccess>> func
             )
             => @try.IsSucess
                 ? func(@try.Success)
-                : Try<TFailure, RR>.Of(@try.Failure);
+                : Try<TFailure, NewTSuccess>.Of(@try.Failure);
 
         public static Either<TFailure, TSuccess> ToEither<TFailure, TSuccess>(
             this Try<TFailure, TSuccess> @try
