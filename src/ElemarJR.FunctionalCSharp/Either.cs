@@ -46,34 +46,6 @@ namespace ElemarJR.FunctionalCSharp
         public static Either<TLeft, TRight> Of(TRight right)
             => right;
     }
-
-    public static class Either
-    {
-        public static Either<TLeft, TResult> Map<TLeft, TRight, TResult>(
-            this Either<TLeft, TRight> @this,
-            Func<TRight, TResult> func
-        ) => @this.IsRight
-            ? func(@this.Right)
-            : (Either<TLeft, TResult>) @this.Left;
-
-        public static Either<TLeft, TResult> Bind<TLeft, TRight, TResult>(
-            this Either<TLeft, TRight>  @this,
-            Func<TRight, Either<TLeft, TResult>> func
-        ) => @this.IsRight
-            ? func(@this.Right)
-            : (Either<TLeft, TResult>)@this.Left;
-    }
 }
 
-namespace System.Linq
-{
-    using ElemarJR.FunctionalCSharp;
-    public static partial class LinqExtensions
-    {
-        public static Either<TLeft, TResult> Select<TLeft, TRight, TResult>(
-            this Either<TLeft, TRight> @this,
-            Func<TRight, TResult> func
-        ) => @this.Map(func);
-    }
-}
 
