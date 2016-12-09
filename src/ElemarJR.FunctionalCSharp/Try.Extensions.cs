@@ -6,6 +6,29 @@ namespace ElemarJR.FunctionalCSharp
 {
     public static class Try
     {
+        #region Of
+        public static Try<IEnumerable<TFailure>, Func<TA, TB, Try<IEnumerable<TFailure>, TSuccess>>> Of
+            <TA, TB, TFailure, TSuccess>(
+                Func<TA, TB, Try<IEnumerable<TFailure>, TSuccess>> func
+            ) => func;
+
+        public static Try<IEnumerable<TFailure>, Func<TA, TB, TC, Try<IEnumerable<TFailure>, TSuccess>>> Of
+            <TA, TB, TC, TFailure, TSuccess>(
+                Func<TA, TB, TC, Try<IEnumerable<TFailure>, TSuccess>> func
+            ) => func;
+        #endregion
+
+        #region Lift
+
+        public static Try<TFailure, TSuccess> Lift<TFailure, TSuccess>(
+            this Try<TFailure, Try<TFailure, TSuccess>> @try
+        ) => @try.Match(
+            failure: f => f,
+            success: s => s
+        );
+        #endregion
+
+        #region Apply
         public static Try<TFailure, Func<TB, TResult>> Apply<TFailure, TA, TB, TResult>(
             this Try<TFailure, Func<TA, TB, TResult>> func, Try<TFailure, TA> arg
         )
@@ -31,24 +54,20 @@ namespace ElemarJR.FunctionalCSharp
 
         public static Try<IEnumerable<TFailure>, Func<TB, TResult>> Apply<TFailure, TA, TB, TResult>(
             this Try<IEnumerable<TFailure>, Func<TA, TB, TResult>> func, Try<TFailure, TA> arg
-        )
-        {
-            return arg.Match(
-                failure: e => Try<IEnumerable<TFailure>, Func<TB, TResult>>.Of(
-                    func.OptionalFailure.GetOrElse(Enumerable.Empty<TFailure>).Concat(new[] { e })
-                ),
-                success: a => func.Match(
-                    failure: Try<IEnumerable<TFailure>, Func<TB, TResult>>.Of,
-                    success: f => Try<IEnumerable<TFailure>, Func<TB, TResult>>.Of(b => f(a, b))
-                )
-            );
-        }
+        ) => arg.Match(
+            failure: e => Try<IEnumerable<TFailure>, Func<TB, TResult>>.Of(
+                func.OptionalFailure.GetOrElse(Enumerable.Empty<TFailure>).Concat(new[] { e })
+            ),
+            success: a => func.Match(
+                failure: Try<IEnumerable<TFailure>, Func<TB, TResult>>.Of,
+                success: f => Try<IEnumerable<TFailure>, Func<TB, TResult>>.Of(b => f(a, b))
+            )
+        );
+
 
         public static Try<IEnumerable<TFailure>, TResult> Apply<TFailure, TA, TResult>(
             this Try<IEnumerable<TFailure>, Func<TA, TResult>> func, Try<TFailure, TA> arg
-        )
-        {
-            return arg.Match(
+        ) => arg.Match(
                 failure: e => Try<IEnumerable<TFailure>, TResult>.Of(
                     func.OptionalFailure.GetOrElse(Enumerable.Empty<TFailure>).Concat(new[] { e })
                 ),
@@ -57,7 +76,9 @@ namespace ElemarJR.FunctionalCSharp
                     success: f => Try<IEnumerable<TFailure>, TResult>.Of(f(a))
                 )
             );
-        }
+        #endregion
+
+        #region Map
         public static Try<TFailure, NewTSuccess> Map<TFailure, TSuccess, NewTSuccess>(
                 this Try<TFailure, TSuccess> @try,
                 Func<TSuccess, NewTSuccess> func
@@ -66,6 +87,13 @@ namespace ElemarJR.FunctionalCSharp
                 ? func(@try.Success)
                 : Try<TFailure, NewTSuccess>.Of(@try.Failure);
 
+        public static Try<TFailure, Func<TB, NewTSuccess>> Map<TFailure, TSuccess, TB, NewTSuccess>(
+            this Try<TFailure, TSuccess> @this,
+            Func<TSuccess, TB, NewTSuccess> func
+        ) => @this.Map(func.Curry());
+        #endregion
+
+        #region Bind
         public static Try<TFailure, NewTSuccess> Bind<TFailure, TSuccess, NewTSuccess>(
                 this Try<TFailure, TSuccess> @try,
                 Func<TSuccess, Try<TFailure, NewTSuccess>> func
@@ -80,5 +108,6 @@ namespace ElemarJR.FunctionalCSharp
             failure: f => f,
             success: s => s
         );
+        #endregion
     }
 }

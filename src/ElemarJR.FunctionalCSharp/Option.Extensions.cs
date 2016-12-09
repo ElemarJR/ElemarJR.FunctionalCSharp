@@ -6,9 +6,12 @@ namespace ElemarJR.FunctionalCSharp
 
     public static class Option
     {
+        #region Of
         public static Option<T> Of<T>(T value)
             => new Option<T>(value, value != null);
+        #endregion
 
+        #region Apply
         public static Option<TResult> Apply<T, TResult>
             (this Option<Func<T, TResult>> @this, Option<T> arg)
             => @this.Bind(f => arg.Map(f));
@@ -16,7 +19,9 @@ namespace ElemarJR.FunctionalCSharp
         public static Option<Func<TB, TResult>> Apply<TA, TB, TResult>
              (this Option<Func<TA, TB, TResult>> @this, Option<TA> arg)
              => Apply(@this.Map(Helpers.Curry), arg);
+        #endregion
 
+        #region Map
         public static Option<TR> Map<T, TR>(
             this Option<T> @this,
             Func<T, TR> mapfunc
@@ -29,7 +34,9 @@ namespace ElemarJR.FunctionalCSharp
             this Option<TA> @this,
             Func<TA, TB, TResult> func
         ) => @this.Map(func.Curry());
+        #endregion
 
+        #region Bind
         public static Option<TR> Bind<T, TR>(
                 this Option<T> @this,
                 Func<T, Option<TR>> bindfunc
@@ -37,7 +44,9 @@ namespace ElemarJR.FunctionalCSharp
             @this.IsSome
                 ? bindfunc(@this.Value)
                 : None;
+        #endregion
 
+        #region GetOrElse
         public static T GetOrElse<T>(
             this Option<T> @this,
             Func<T> fallback
@@ -52,6 +61,6 @@ namespace ElemarJR.FunctionalCSharp
             T @else
             ) =>
                 GetOrElse(@this, () => @else);
-
+        #endregion
     }
 }
