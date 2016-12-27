@@ -19,7 +19,7 @@ namespace ElemarJR.FunctionalCSharp.Tests.TrySamples
     {
         public Try<Exception, Employee> GetById(string id)
             => Try.Run(() => new DbContext().Find(id))
-                .Bind(e => e ?? (Try<Exception, Employee>) new Exception());
+            .Bind(e => e ?? (Try<Exception, Employee>) new Exception());
     }
 
     public class DealingWithRepositories
