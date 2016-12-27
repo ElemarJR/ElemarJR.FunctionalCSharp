@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace ElemarJR.FunctionalCSharp
 {
+    using static Helpers;
     public static class Try
     {
         #region Of
@@ -99,10 +100,11 @@ namespace ElemarJR.FunctionalCSharp
         #endregion
 
         #region Bind
+
         public static Try<TFailure, NewTSuccess> Bind<TFailure, TSuccess, NewTSuccess>(
-                this Try<TFailure, TSuccess> @try,
-                Func<TSuccess, Try<TFailure, NewTSuccess>> func
-            )
+            this Try<TFailure, TSuccess> @try,
+            Func<TSuccess, Try<TFailure, NewTSuccess>> func
+        )
             => @try.IsSucess
                 ? func(@try.Success)
                 : Try<TFailure, NewTSuccess>.Of(@try.Failure);
@@ -113,6 +115,26 @@ namespace ElemarJR.FunctionalCSharp
             failure: f => f,
             success: s => s
         );
+        #endregion
+
+        #region Run
+        public static Try<Exception, TSuccess> Run<TSuccess>(
+            Func<TSuccess> func
+        )
+        {
+            try
+            {
+                return func();
+            }
+            catch (Exception e)
+            {
+                return e;
+            }
+        }
+
+        public static Try<Exception, Unit> Run(
+            Action action
+        ) => Run(ToFunc(action));
         #endregion
     }
 }
