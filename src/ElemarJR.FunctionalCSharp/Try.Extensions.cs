@@ -100,7 +100,6 @@ namespace ElemarJR.FunctionalCSharp
         #endregion
 
         #region Bind
-
         public static Try<TFailure, NewTSuccess> Bind<TFailure, TSuccess, NewTSuccess>(
             this Try<TFailure, TSuccess> @try,
             Func<TSuccess, Try<TFailure, NewTSuccess>> func
@@ -119,7 +118,7 @@ namespace ElemarJR.FunctionalCSharp
 
         #region Run
         public static Try<Exception, TSuccess> Run<TSuccess>(
-            Func<TSuccess> func
+            this Func<TSuccess> func
         )
         {
             try
@@ -133,7 +132,7 @@ namespace ElemarJR.FunctionalCSharp
         }
 
         public static Try<Exception, Unit> Run(
-            Action action
+            this Action action
         ) => Run(ToFunc(action));
         #endregion
     }

@@ -62,5 +62,24 @@ namespace ElemarJR.FunctionalCSharp
             ) =>
                 GetOrElse(@this, () => @else);
         #endregion
+
+        #region OrElse
+        public static Option<T> OrElse<T>(
+            this Option<T> @this,
+            Option<T> @else
+        ) => @this.Match(
+            some: _ => @this,
+            none: () => @else
+        );
+
+
+        public static Option<T> OrElse<T>(
+            this Option<T> @this,
+            Func<Option<T>> fallback
+        ) => @this.Match(
+            some: _ => @this,
+            none: fallback
+        );
+        #endregion
     }
 }

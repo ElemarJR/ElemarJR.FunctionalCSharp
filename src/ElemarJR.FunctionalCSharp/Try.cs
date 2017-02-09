@@ -5,7 +5,7 @@ using System.Linq;
 namespace ElemarJR.FunctionalCSharp
 {
     using static Helpers;
-
+    
     public struct Try<TFailure, TSuccess>
     {
         internal TFailure Failure { get; }
@@ -56,4 +56,4 @@ namespace ElemarJR.FunctionalCSharp
         public static Try<TFailure, TSuccess> Of(TSuccess obj) => obj;
         public static Try<TFailure, TSuccess> Of(TFailure obj) => obj;
     }
-}
+} 

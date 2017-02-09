@@ -12,11 +12,11 @@ namespace System.Linq
 
         public static Option<TResult> SelectMany<T, TB, TResult>(
             this Option<T> @this,
-            Func<T, Option<TB>> bind,
+            Func<T, Option<TB>> binder,
             Func<T, TB, TResult> projector
         ) => @this.Match(
             none: () => None,
-            some: (t) => @this.Bind(bind).Match(
+            some: (t) => @this.Bind(binder).Match(
                 none: () => None,
                 some: (tb) => Some(projector(t, tb))
             )
