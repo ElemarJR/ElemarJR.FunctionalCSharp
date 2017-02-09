@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using ElemarJR.FunctionalCSharp;
 
 namespace Playground
@@ -9,11 +10,12 @@ namespace Playground
         static void Main(string[] args)
         {
             // planejamento do fluxo.
-            var promise = 
-                AskEmployeeId()
-                .Bind(ParseId)
-                .Bind(GetEmployeeById);
-
+            var promise =
+                from userInput in AskEmployeeId()
+                from parsedInput in ParseId(userInput)
+                from user in GetEmployeeById(parsedInput)
+                select user;
+                
             // execução.
             var result = promise.Run();
 
