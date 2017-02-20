@@ -12,7 +12,7 @@ namespace ElemarJR.FunctionalCSharp.Tests.OptionSamples
             var result = 0d;
             return source.Validate(
                 s => double.TryParse(s, out result),
-                onSuccess: _ => result
+                success: _ => result
             );
         }
 

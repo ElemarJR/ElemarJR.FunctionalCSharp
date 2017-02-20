@@ -13,8 +13,8 @@ namespace ElemarJR.FunctionalCSharp.Tests.TrySamples
             var result = 0d;
             return source.Validate(
                 s => double.TryParse(s, out result),
-                onFailure: s => $"Failed to parse '{s}' to double",
-                onSuccess: _ => result
+                failure: s => $"Failed to parse '{s}' to double",
+                success: _ => result
             );
         }
 

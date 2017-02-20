@@ -18,17 +18,26 @@ namespace ElemarJR.FunctionalCSharp
 
         public Try<TFailure, TSuccess> Validate<TFailure, TSuccess>(
             Func<T, bool> validation,
-            Func<T, TFailure> onFailure,
-            Func<T, TSuccess> onSuccess
+            Func<T, TFailure> failure,
+            Func<T, TSuccess> success
         ) => validation(_value)
-            ? onSuccess(_value)
-            : (Try<TFailure, TSuccess>) onFailure(_value);
+            ? success(_value)
+            : (Try<TFailure, TSuccess>) failure(_value);
+
+        public void Validate(
+            Func<T, bool> validation,
+            Action<T> failure,
+            Action<T> success
+        )
+        {
+            if (validation(_value)) success(_value); else failure(_value);
+        } 
 
         public Option<TSuccess> Validate<TSuccess>(
             Func<T, bool> validation,
-            Func<T, TSuccess> onSuccess
+            Func<T, TSuccess> success
         ) => validation(_value)
-            ? Some(onSuccess(_value))
+            ? Some(success(_value))
             : None;
 
         public Option<T> Validate(
