@@ -45,5 +45,13 @@ namespace ElemarJR.FunctionalCSharp
         ) => validation(_value)
             ? Some(_value)
             : None;
+
+        public Try<TFailure, TSuccess> Validate<TFailure, TSuccess>(
+            Func<T, bool> predicate,
+            Func<T, TFailure> failure,
+            Func<T, Try<TFailure, TSuccess>> success
+        ) => predicate(_value)
+            ? success(_value)
+            : (Try<TFailure, TSuccess>)failure(_value);
     }
 }

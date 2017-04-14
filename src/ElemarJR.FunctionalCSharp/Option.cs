@@ -30,6 +30,9 @@ namespace ElemarJR.FunctionalCSharp
 
         public static implicit operator Option<T>(NoneType _)
             => None;
+
+        public static implicit operator Unit(Option<T> _)
+            => Unit();
     }
 }
 

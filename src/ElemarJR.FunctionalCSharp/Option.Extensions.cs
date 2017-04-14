@@ -81,5 +81,14 @@ namespace ElemarJR.FunctionalCSharp
             none: fallback
         );
         #endregion
+
+        public static Option<T> IfNone<T>(
+            this Option<T> @this,
+            Action action
+        )
+        {
+            if (@this.IsNone) action();
+            return @this;
+        }
     }
 }

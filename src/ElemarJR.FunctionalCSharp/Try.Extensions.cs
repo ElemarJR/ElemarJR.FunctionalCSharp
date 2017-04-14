@@ -135,5 +135,25 @@ namespace ElemarJR.FunctionalCSharp
             this Action action
         ) => Run(ToFunc(action));
         #endregion
+
+        public static Try<TFailure, TSuccess> Flatten<TFailure, TSuccess>(
+            this Try<TFailure, Option<TSuccess>> @try,
+            Func<TFailure> ifNone
+        )
+        {
+            if (@try.IsFailure)
+            {
+                return @try.Failure;
+            }
+            return @try.Success.IsSome
+                ? @try.Success.Value
+                : (Try<TFailure, TSuccess>)ifNone();
+        }
+
+        public static Try<TFailure, TSuccess> IfNone<TFailure, TSuccess>(
+            this Try<TFailure, Option<TSuccess>> @try,
+            Func<TFailure> ifNone
+        ) => @try.Flatten(ifNone);
+
     }
 }
