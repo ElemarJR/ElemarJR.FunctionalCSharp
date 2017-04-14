@@ -1,16 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26127.3
+VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{06DCC895-1B86-41AB-A4AE-19721C6A6B0E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{6DE29745-29DD-44CE-98D0-A97A0AF6F968}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5067ABC1-7E2F-4C12-9368-41D72296E76B}"
-	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElemarJR.FunctionalCSharp", "src\ElemarJR.FunctionalCSharp\ElemarJR.FunctionalCSharp.csproj", "{DD44EBAD-99C0-4D7A-AAC8-0D679C58D272}"
 EndProject

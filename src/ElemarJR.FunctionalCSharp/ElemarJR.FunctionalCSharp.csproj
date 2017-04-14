@@ -8,6 +8,15 @@
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <Version>1.0.6</Version>
+    <Authors>ElemarJR</Authors>
+    <Description>C# functional language extensions</Description>
+    <RepositoryUrl>https://github.com/ElemarJR/ElemarJR.FunctionalCSharp</RepositoryUrl>
+    <NeutralLanguage></NeutralLanguage>
+    <PackageTags>functional functional-csharp option either try untrusted</PackageTags>
+    <PackageReleaseNotes />
+    <PackageIconUrl />
+    <PackageProjectUrl />
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="**\*.resx" />
